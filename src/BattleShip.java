@@ -23,7 +23,7 @@ public class BattleShip {
 	    addShipsToMatrix();
 	    	     
 	    while(!gameOver) {
-	    	printMatrix(true);
+	    	printMatrix(false);
 	    	System.out.println("Enter row (Letter):");
 	    	letter = input.next().charAt(0);
 	    	System.out.println("Enter column (Number): ");
