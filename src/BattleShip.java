@@ -11,11 +11,14 @@ public class BattleShip {
 	public static final int DIMENSION = 8;	
 	static char[][] matrix = new char[DIMENSION][DIMENSION];
 	static boolean gameOver;
-		
+	static int ships = 10;
+	public static int shots = 10;
+	static char letter;
+	static int number;
+	
 	public static void main(String[] args) {
 		
-		char letter;
-		int number;
+
 		Scanner input = new Scanner(System.in);
 			     	     	
 		gameOver = false;
@@ -24,22 +27,90 @@ public class BattleShip {
 	    	     
 	    while(!gameOver) {
 	    	printMatrix(false);
-	    	System.out.println("Enter row (Letter):");
-	    	letter = input.next().charAt(0);
-	    	System.out.println("Enter column (Number): ");
-	    	number = input.nextInt();
+	    	askCoordinates(input);
 	    	shoot(letter, number);
+	    	checkGameOver();
+	    	
 	    }
-	     
+	     showResult();
+	}
+
+
+
+
+
+
+	private static void askCoordinates(Scanner input) {
+		letter = 'º';
+		while (!inRange(letter))	{
+			System.out.println("Enter row (Letter): ");
+			letter = input.next().charAt(0);
+		}
+		System.out.println("Enter column (Number): ");
+		number = input.nextInt();
 	}
 	
+
+		
+		
+	
+
+	private static boolean inRange(char letter2) {
+		if (letter < 'A' || letter > 'A' + DIMENSION - 1)	{
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+
+
+
+
+
+	private static void showResult() {
+		if (ships == 0)	{
+			System.out.println("You WIN!!!");
+		} else {
+			System.out.println("You don't have more shoots :( ");
+		}
+		
+	}
+
+
+
+
+
+
+	private static void checkGameOver() {
+		if (ships > 0 || shots > 0)	{
+			gameOver = true;
+		}
+		
+	}
+
+
+
+
+
+
 	private static void shoot(char letter, int number) {
 		
 		int row = letter - 'A';
 		int col = number - 1;
 		
-		//if (matrix[row][col] == ...)
-		
+		if(ships > 0)	{
+			if (matrix[row][col] == SHIP_SYMBOL)	{
+			matrix[row][col] = SUNK_SHIP_SYMBOL;		
+			ships--;
+			} else {
+				if (matrix[row][col] != SUNK_SHIP_SYMBOL)	{
+					matrix[row][col] = WATER_SYMBOL;
+				}
+					
+			}
+			shots--;
+		}
 	}
 
 	private static void addShipsToMatrix() {
