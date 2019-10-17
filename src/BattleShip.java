@@ -42,12 +42,19 @@ public class BattleShip {
 
 	private static void askCoordinates(Scanner input) {
 		letter = 'º';
-		while (!inRange(letter))	{
+		boolean firstValue = true;
+		while (!letterInRange(firstValue))	{
 			System.out.println("Enter row (Letter): ");
 			letter = input.next().charAt(0);
+			firstValue=false;
 		}
+		number= -1;
+		firstValue=true;
+		while (!numberInRange(firstValue))	{
 		System.out.println("Enter column (Number): ");
 		number = input.nextInt();
+		firstValue = false;
+		}
 	}
 	
 
@@ -55,8 +62,29 @@ public class BattleShip {
 		
 	
 
-	private static boolean inRange(char letter2) {
+	private static boolean numberInRange(boolean first) {
+		if (number < 1 || number > DIMENSION)	{
+			if (!first) {
+				System.err.println("number not valid");
+			}
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+
+
+
+
+
+	private static boolean letterInRange(boolean first) {
 		if (letter < 'A' || letter > 'A' + DIMENSION - 1)	{
+			if (!first)	{
+				System.err.println("letter not valid");
+				System.out.println();
+				
+			}
 			return false;
 		} else {
 			return true;
